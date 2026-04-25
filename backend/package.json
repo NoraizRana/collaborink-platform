@@ -1,0 +1,68 @@
+{
+  "name": "collaborink-backend",
+  "version": "1.0.0",
+  "description": "Team collaboration platform - Backend API",
+  "type": "module",
+  "main": "src/server.js",
+  "scripts": {
+    "start": "node src/server.js",
+    "dev": "nodemon src/server.js",
+    "test": "jest --watchAll",
+    "test:ci": "jest --coverage",
+    "lint": "eslint src/",
+    "lint:fix": "eslint src/ --fix",
+    "build": "npm run lint",
+    "seed": "node scripts/seed.js"
+  },
+  "keywords": [
+    "collaboration",
+    "team",
+    "workspace",
+    "real-time",
+    "chat"
+  ],
+  "author": "Your Name",
+  "license": "MIT",
+  "dependencies": {
+    "express": "^4.18.2",
+    "mongoose": "^8.0.0",
+    "jsonwebtoken": "^9.1.0",
+    "bcryptjs": "^2.4.3",
+    "dotenv": "^16.3.1",
+    "express-validator": "^7.0.0",
+    "cors": "^2.8.5",
+    "helmet": "^7.1.0",
+    "express-mongo-sanitize": "^2.2.0",
+    "express-rate-limit": "^7.1.0",
+    "socket.io": "^4.7.0",
+    "redis": "^4.6.12",
+    "axios": "^1.6.0",
+    "multer": "^1.4.5",
+    "sharp": "^0.33.0",
+    "aws-sdk": "^2.1500.0",
+    "cloudinary": "^1.40.0",
+    "openai": "^4.20.0",
+    "stripe": "^13.10.0",
+    "nodemailer": "^6.9.7",
+    "jsonwebtoken": "^9.1.0",
+    "passport": "^0.7.0",
+    "passport-google-oauth20": "^2.0.0",
+    "passport-github2": "^0.1.12",
+    "passport-slack-oauth2": "^1.3.0",
+    "winston": "^3.11.0",
+    "joi": "^17.11.0",
+    "uuid": "^9.0.1",
+    "date-fns": "^2.30.0"
+  },
+  "devDependencies": {
+    "nodemon": "^3.0.2",
+    "jest": "^29.7.0",
+    "supertest": "^6.3.3",
+    "eslint": "^8.54.0",
+    "prettier": "^3.1.0"
+  },
+  "engines": {
+    "node": ">=18.0.0",
+    "npm": ">=9.0.0"
+  }
+}

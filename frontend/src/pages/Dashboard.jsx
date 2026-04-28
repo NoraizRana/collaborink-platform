@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { useAuthStore } from '../store/authStore';
 import { useWorkspaceStore } from '../store/workspaceStore';
 import Layout from '../layouts/Layout';
-import DashboardOverview from '../modules/dashboard/DashboardOverview';
+import DashboardOverview from '../modules/dashboard/DashboardOverview.jsx';
 import { Loader } from 'lucide-react';
 
 export default function Dashboard() {

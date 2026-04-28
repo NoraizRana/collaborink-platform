@@ -1,49 +1,46 @@
+// backend/src/server.js
 import dotenv from 'dotenv';
-import app from './app.js';
-import { connectDB, connectRedis } from './config/database.js';
-
 dotenv.config();
+
+import http from 'http';
+import { connectDB, connectRedis } from './config/database.js';
+import app from './app.js';
+import { Server } from 'socket.io';
+import logger from './middleware/logger.js';
 
 const PORT = process.env.PORT || 3000;
 
-async function startServer() {
+async function start() {
   try {
-    console.log('🚀 Starting Collaborink Server...');
-    
-    // Connect databases
     await connectDB();
     await connectRedis();
 
-    // Start HTTP server
-    const server = require('http').createServer(app);
-    
+    const server = http.createServer(app);
+
+    // Socket.io (basic)
+    const io = new Server(server, {
+      cors: { origin: process.env.FRONTEND_URL || 'http://localhost:5173', credentials: true },
+    });
+
+    io.on('connection', (socket) => {
+      logger.info(`Socket connected ${socket.id}`);
+      socket.on('disconnect', () => logger.info(`Socket disconnected ${socket.id}`));
+    });
+
     server.listen(PORT, () => {
-      console.log(`
-╔════════════════════════════════════════════════════╗
-║                                                    ║
-║         ✅ COLLABORINK SERVER RUNNING ✅           ║
-║                                                    ║
-║  🌐 API:  http://localhost:${PORT}                     ║
-║  📝 Env:  ${process.env.NODE_ENV || 'development'}                 ║
-║  🗄️  DB:   Connected                               ║
-║                                                    ║
-╚════════════════════════════════════════════════════╝
-      `);
+      logger.info(`Server running on port ${PORT}`);
+      console.log(`✅ Server running on port ${PORT}`);
     });
 
-    // Graceful shutdown
+    // graceful shutdown
     process.on('SIGTERM', () => {
-      console.log('SIGTERM received: closing HTTP server');
-      server.close(() => {
-        console.log('HTTP server closed');
-        process.exit(0);
-      });
+      logger.info('SIGTERM received, shutting down...');
+      server.close(() => process.exit(0));
     });
-
-  } catch (error) {
-    console.error('❌ Server startup failed:', error.message);
+  } catch (err) {
+    console.error('Failed to start server', err);
     process.exit(1);
   }
 }
 
-startServer();
+start();

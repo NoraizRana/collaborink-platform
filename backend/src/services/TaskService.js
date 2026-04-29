@@ -63,7 +63,7 @@ export class TaskService {
     await Activity.create({
       user: userId,
       type: 'task_updated',
-      action: `Updated task`,
+      action: 'Updated task',
       resource: 'task',
       resourceId: taskId,
     });

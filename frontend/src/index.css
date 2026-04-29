@@ -3,9 +3,9 @@
 @import 'tailwindcss/utilities';
 
 :root {
-  --primary: #3B82F6;
-  --secondary: #1F2937;
-  --accent: #10B981;
+  --primary: #3b82f6;
+  --secondary: #1f2937;
+  --accent: #10b981;
 }
 
 * {
@@ -16,8 +16,8 @@
 
 body {
   font-family: 'Inter', system-ui, sans-serif;
-  background-color: #0F172A;
-  color: #E2E8F0;
+  background-color: #0f172a;
+  color: #e2e8f0;
 }
 
 html {

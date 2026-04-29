@@ -81,7 +81,7 @@ export class ProjectService {
       workspace: project.workspace,
       user: addedBy,
       type: 'member_joined',
-      action: `Added member to project`,
+      action: 'Added member to project',
       resource: 'project',
       resourceId: projectId,
       relatedUser: userId,
@@ -106,7 +106,7 @@ export class ProjectService {
       workspace: project.workspace,
       user: removedBy,
       type: 'member_joined', // Could be 'member_removed' if you add it
-      action: `Removed member from project`,
+      action: 'Removed member from project',
       resource: 'project',
       resourceId: projectId,
       relatedUser: userId,
@@ -127,7 +127,7 @@ export class ProjectService {
       workspace: project.workspace,
       user: userId,
       type: 'project_created', // Could be 'project_deleted'
-      action: `Deleted project`,
+      action: 'Deleted project',
       resource: 'project',
       resourceId: projectId,
     });

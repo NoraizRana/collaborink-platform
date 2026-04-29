@@ -1,20 +1,20 @@
-﻿import mongoose from "mongoose";
+﻿import mongoose from 'mongoose';
 
 const workspaceSchema = new mongoose.Schema(
   {
     name: { type: String, required: true, trim: true },
     description: String,
     avatar: String,
-    owner: { type: mongoose.Schema.Types.ObjectId, ref: "User", required: true },
+    owner: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true },
     members: [
       {
-        user: { type: mongoose.Schema.Types.ObjectId, ref: "User" },
-        role: { type: String, enum: ["owner", "admin", "member", "guest"], default: "member" },
+        user: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
+        role: { type: String, enum: ['owner', 'admin', 'member', 'guest'], default: 'member' },
         joinedAt: { type: Date, default: Date.now },
       },
     ],
-    teams: [{ type: mongoose.Schema.Types.ObjectId, ref: "Team" }],
-    projects: [{ type: mongoose.Schema.Types.ObjectId, ref: "Project" }],
+    teams: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Team' }],
+    projects: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Project' }],
     settings: {
       isPrivate: { type: Boolean, default: false },
       allowPublicJoin: { type: Boolean, default: false },
@@ -33,4 +33,4 @@ const workspaceSchema = new mongoose.Schema(
   { timestamps: true }
 );
 
-export default mongoose.model("Workspace", workspaceSchema);
+export default mongoose.model('Workspace', workspaceSchema);

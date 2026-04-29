@@ -1,30 +1,30 @@
-import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom'
-import { QueryClientProvider, QueryClient } from '@tanstack/react-query'
-import { Toaster } from 'react-hot-toast'
-import { useEffect } from 'react'
+import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
+import { QueryClientProvider, QueryClient } from '@tanstack/react-query';
+import { Toaster } from 'react-hot-toast';
+import { useEffect } from 'react';
 
 // Pages
-import AuthPage from './pages/AuthPage'
-import Dashboard from './pages/Dashboard'
+import AuthPage from './pages/AuthPage';
+import Dashboard from './pages/Dashboard';
 
 // Components
-import PrivateRoute from './components/PrivateRoute'
+import PrivateRoute from './components/PrivateRoute';
 
 // Store
-import { useAuthStore } from './store/authStore'
+import { useAuthStore } from './store/authStore';
 
-const queryClient = new QueryClient()
+const queryClient = new QueryClient();
 
 function App() {
-  const { token, getCurrentUser } = useAuthStore()
+  const { token, getCurrentUser } = useAuthStore();
 
   useEffect(() => {
     if (token) {
       getCurrentUser().catch(() => {
         // Token invalid, user will be logged out by the store
-      })
+      });
     }
-  }, [token])
+  }, [token]);
 
   return (
     <QueryClientProvider client={queryClient}>
@@ -74,7 +74,7 @@ function App() {
         }}
       />
     </QueryClientProvider>
-  )
+  );
 }
 
-export default App
+export default App;

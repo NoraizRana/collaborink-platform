@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuthStore } from '../store/authStore';
 import { useWorkspaceStore } from '../store/workspaceStore';
@@ -7,7 +7,7 @@ import DashboardOverview from '../modules/dashboard/DashboardOverview.jsx';
 import { Loader } from 'lucide-react';
 
 export default function Dashboard() {
-  const { user, token } = useAuthStore();
+  const { token } = useAuthStore();
   const { workspaces, fetchWorkspaces, isLoading } = useWorkspaceStore();
   const navigate = useNavigate();
   const [selectedWorkspace, setSelectedWorkspace] = useState(null);
@@ -39,7 +39,7 @@ export default function Dashboard() {
     );
   }
 
-  return (
+  return ( 
     <Layout>
       <DashboardOverview workspace={selectedWorkspace} />
     </Layout>

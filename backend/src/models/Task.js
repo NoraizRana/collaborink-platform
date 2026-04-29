@@ -1,98 +1,28 @@
+// backend/src/models/Task.js
 import mongoose from 'mongoose';
 
 const taskSchema = new mongoose.Schema(
   {
-    title: {
-      type: String,
-      required: true,
-      trim: true,
-    },
-    description: String,
-    project: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: 'Project',
-      required: true,
-    },
-    creator: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: 'User',
-      required: true,
-    },
-    assignee: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: 'User',
-    },
-    status: {
-      type: String,
-      enum: ['todo', 'in-progress', 'review', 'done'],
-      default: 'todo',
-    },
-    priority: {
-      type: String,
-      enum: ['low', 'medium', 'high', 'urgent'],
-      default: 'medium',
-    },
+    title: { type: String, required: true, trim: true },
+    description: { type: String, default: '' },
+    project: { type: mongoose.Schema.Types.ObjectId, ref: 'Project', required: true },
+    column: { type: mongoose.Schema.Types.ObjectId, ref: 'BoardColumn' }, // references column._id
+    position: { type: Number, default: 0 }, // order within column
+    status: { type: String, enum: ['todo', 'in-progress', 'review', 'done'], default: 'todo' },
+    priority: { type: String, enum: ['low', 'medium', 'high', 'urgent'], default: 'medium' },
+    assignee: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
+    watchers: [{ type: mongoose.Schema.Types.ObjectId, ref: 'User' }],
     dueDate: Date,
-    startDate: Date,
-    completedDate: Date,
-    estimatedHours: Number,
-    actualHours: Number,
-    progress: {
-      type: Number,
-      min: 0,
-      max: 100,
-      default: 0,
-    },
     labels: [String],
-    attachments: [
-      {
-        url: String,
-        filename: String,
-        uploadedBy: mongoose.Schema.Types.ObjectId,
-        uploadedAt: { type: Date, default: Date.now },
-      },
-    ],
-    subtasks: [
-      {
-        title: String,
-        completed: { type: Boolean, default: false },
-        completedDate: Date,
-      },
-    ],
-    comments: [
-      {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'Comment',
-      },
-    ],
-    watchers: [
-      {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'User',
-      },
-    ],
-    relatedTasks: [
-      {
-        task: mongoose.Schema.Types.ObjectId,
-        type: {
-          type: String,
-          enum: ['blocks', 'blocked-by', 'relates-to', 'duplicate'],
-        },
-      },
-    ],
-    customFields: mongoose.Schema.Types.Mixed,
-    activity: [
-      {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'Activity',
-      },
-    ],
-    createdAt: {
-      type: Date,
-      default: Date.now,
-    },
+    attachments: [{ type: mongoose.Schema.Types.ObjectId, ref: 'File' }],
+    createdBy: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
+    metadata: mongoose.Schema.Types.Mixed,
+    archived: { type: Boolean, default: false },
   },
   { timestamps: true }
 );
+
+// Compound index for efficient queries by project + column + position
+taskSchema.index({ project: 1, column: 1, position: 1 });
 
 export default mongoose.model('Task', taskSchema);

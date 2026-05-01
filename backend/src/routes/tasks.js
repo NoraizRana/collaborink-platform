@@ -30,7 +30,7 @@ router.put('/:taskId', TaskController.updateTask);
 // Update task status
 router.patch('/:taskId/status', TaskController.updateTaskStatus);
 
-// Delete task
+// Delete task //deleted one
 router.delete('/:taskId', TaskController.deleteTask);
 
 export default router;
